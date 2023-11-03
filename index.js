@@ -3,7 +3,6 @@ const app = express()
 const bodyParser = require("body-parser")
 const ejs = require('ejs')
 const connection = require('./database/database')
-
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/ArticlesController")
 
