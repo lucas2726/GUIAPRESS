@@ -1,16 +1,14 @@
 const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
-const ejs = require('ejs')
 const connection = require('./database/database')
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/ArticlesController")
 
 app.set('view engine', 'ejs')
-
 app.use(express.static('public'))
 
-app.use(bodyParser.json)
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
 connection.authenticate()
