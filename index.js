@@ -4,6 +4,9 @@ const bodyParser = require("body-parser")
 const ejs = require('ejs')
 const connection = require('./database/database')
 
+const categoriesController = require("./categories/categoriesController")
+const articlesController = require("./articles/ArticlesController")
+
 app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
@@ -11,12 +14,23 @@ app.use(express.static('public'))
 app.use(bodyParser.json)
 app.use(bodyParser.urlencoded({extended: false}))
 
-app.get("/", (req, res) => {
-    res.render("index")
-})
+connection.authenticate()
+  .then(() => {
+    console.log("Conexão estabelecida com sucesso!")
+  }).catch((err) => {
+    console.log("Erro ao conectar ao banco de dados", err)
+  })
 
-app.listen(8081, () => {
+  app.use("/", categoriesController)
+
+  app.use("/", articlesController)
+
+ app.get("/", (req, res) => {
+     res.render("index")
+ })
+
+ app.listen(8080, () => {
     console.log("O servidor está rodando!")
-})
+ })
 
   
