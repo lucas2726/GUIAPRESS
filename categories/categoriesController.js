@@ -1,12 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-router.get("/categories", (req, res) => {
-    res.send("NOTA DE CATEGORIES!")
-})
 
 router.get("/admin/categories/new", (req,res) => {
-    res.send("NOTA PARA CRIAR UMA NOVA CATEGORIA!")
+    res.send("admin/categories/new")
 })
 
 module.exports = router
