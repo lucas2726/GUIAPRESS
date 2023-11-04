@@ -19,6 +19,4 @@ body:{
 Category.hasMany(Article)// Uma categoria tem muitos artigos
 Article.belongsTo(Category)// Um artigo pertence a uma categoria
 
-Category.sync({force:true})
-
 module.exports = Article
