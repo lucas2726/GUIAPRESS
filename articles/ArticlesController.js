@@ -35,4 +35,25 @@ router.post("/articles/save", (req, res) => {
 
 })
 
+router.post("/articles/delete", (req,res) => {
+    let id = req.body.id
+      if(id != undefined) { //Se não estiver vazio
+        if(!isNaN(id)) { //Significa não é um número
+  
+         Article.destroy ({//Para deletar um artigo
+            where: {
+              id:id
+            }
+          }).then(() => {
+             res.redirect("/admin/articles")
+          })
+  
+        }else { //Se não for um número
+          res.redirect("/admin/articles")
+      }
+      }else { //Se for Null
+          res.redirect("/admin/articles")
+      }
+  })
+
 module.exports = router

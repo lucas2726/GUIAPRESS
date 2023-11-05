@@ -6,7 +6,8 @@ const Article = connection.define('articles', {
 title:{
     type: Sequelize.STRING,
     allowNull: false
-},slug:{
+},
+slug:{
     type: Sequelize.STRING,
     allowNull: false
 }, 
