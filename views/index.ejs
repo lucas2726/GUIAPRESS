@@ -1,6 +1,25 @@
 <%-include('partials/header.ejs')%>
+<%-include('partials/homenavbar.ejs')%>
 <body>
-    <h1>oooiiii</h1>
+<div class="container">
+   
+  <% articles.forEach(article => { %> <!--articles é o msm articles 1 do index.js serve para pegar os dados do BD-->
+    <div class="card">
+
+       <div class="card-header">
+     <h2><%= article.title %> </h2>
+       </div>
+
+       <div class="card-body">
+        <a href="/<%= article.slug %>" class= "btn btn-success">Ler Artigo</a> <!--Cria um button com um link-->
+       </div>
+
+    </div>
+
+    <br>
+  <% }) %>
+
+   </div>
 </body>
 <%-include('partials/footer.ejs')%>
 

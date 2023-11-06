@@ -23,12 +23,40 @@ connection.authenticate()
     console.log("Erro ao conectar ao banco de dados", err)
   })
 
-  app.use("/", categoriesController)
-  app.use("/", articlesController)
+  //articles 1
+  app.get("/", (req, res) => { 
+    Article.findAll({
+      order:[
+        ['id','DESC']
+      ]
+    }).then(articles => {
+       Category.findAll().then(categories => {
+        res.render("index", {articles: articles, categories: categories})//{articles: articles} Serve para mandar os dados para o front nesse caso index
+       })
+   })
+})
 
- app.get("/", (req, res) => {
-     res.render("index")
- })
+app.use("/", categoriesController)
+app.use("/", articlesController)
+
+app.get("/:slug", (req, res) => {
+  let slug = req.params.slug
+  Article.findOne({
+    where: {
+      slug: slug
+    }
+  }).then(article => {
+    if (article != undefined) {
+      Category.findAll().then(categories => {
+        res.render("index", {article: article, categories: categories})//{articles: articles} Serve para mandar os dados para o front nesse caso index //Article passa para article a var article 
+       })
+    } else {
+      res.redirect("/")
+    }
+  }).catch(err => {
+    res.redirect("/")
+  })
+})
 
  app.listen(8080, () => {
     console.log("O servidor está rodando!")

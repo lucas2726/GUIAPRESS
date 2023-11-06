@@ -1,0 +1,15 @@
+<%-include('partials/header.ejs')%>
+<%-include('partials/homenavbar.ejs')%>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+      <h2><%= article.title %> </h2>
+        </div>
+    </div>
+    <div class="card-body">
+      <%- article.body %> <!--Só é possível acessar por causa: res.render("article", {article: article}) do index.js. Serve para pegar os dados do BD-->
+    </div>
+ </div>
+</body>
+<%-include('partials/footer.ejs')%>

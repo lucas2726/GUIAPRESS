@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Category = require("../categories/Category")
-const Article = require("./Article.js")
+const Article = require("./Article")
 const slugify = require("slugify")
 
 router.get("/admin/articles", (req, res) => {
@@ -32,9 +32,7 @@ router.post("/articles/save", (req, res) => {
    }).then(() => {
     res.redirect("/admin/articles")
    })
-
 })
-
 router.post("/articles/delete", (req,res) => {
     let id = req.body.id
       if(id != undefined) { //Se não estiver vazio
@@ -47,7 +45,6 @@ router.post("/articles/delete", (req,res) => {
           }).then(() => {
              res.redirect("/admin/articles")
           })
-  
         }else { //Se não for um número
           res.redirect("/admin/articles")
       }
