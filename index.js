@@ -28,7 +28,8 @@ connection.authenticate()
     Article.findAll({
       order:[
         ['id','DESC']
-      ]
+      ],
+      limit: 4
     }).then(articles => {
        Category.findAll().then(categories => {
         res.render("index", {articles: articles, categories: categories})/* Aqui, o servidor está respondendo à requisição HTTP renderizando um template chamado "index" e passando dois objetos como dados para o frontend. O objeto articles contém os artigos recuperados da consulta à tabela Article, e o objeto categories contém as categorias recuperadas da consulta à tabela Category. Estes dados podem ser usados no frontend para exibir os artigos e categorias na página.*/
