@@ -3,19 +3,27 @@ const app = express()
 const bodyParser = require("body-parser")
 const connection = require('./database/database')
 
+//Serve para adicionar o router
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/ArticlesController")
+const usersController = require("./users/UsersController") 
 
+//Serve para adicionar o BD
 const Article = require("./articles/Article")
 const Category = require("./categories/Category")
+const User = require("./users/User")
 
+//Para dizer para o js usar o ejs como sua view engine
 app.set('view engine', 'ejs')
 
+//Para criar os arquivos estáticos
 app.use(express.static('public'))
 
+//Para adicionar o body parser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
+//Para autenticar a conexão com o BD
 connection.authenticate()
   .then(() => {
     console.log("Conexão estabelecida com sucesso!")
@@ -38,8 +46,10 @@ connection.authenticate()
 })
 
 
+//Para dizer que vamos ultilizar os Controller
 app.use("/", categoriesController)
 app.use("/", articlesController)
+app.use("/", usersController)
 
 app.get('/:slug',(req,res)=>{
   let slug = req.params.slug;
