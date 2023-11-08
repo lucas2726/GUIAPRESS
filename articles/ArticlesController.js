@@ -3,8 +3,9 @@ const router = express.Router()
 const Category = require("../categories/Category")
 const Article = require("./Article")
 const slugify = require("slugify")
+const adminAuth = require("../middleware/adminAuth")
 
-router.get("/admin/articles", (req, res) => {
+router.get("/admin/articles", adminAuth, (req, res) => {
     Article.findAll({
         include: [{model: Category}]
     }).then(articles => {
@@ -12,7 +13,7 @@ router.get("/admin/articles", (req, res) => {
     })  
 })
 
-router.get("/admin/articles/new", (req,res) => {
+router.get("/admin/articles/new", adminAuth, (req,res) => {
     Category.findAll().then(categories => {
        res.render("admin/articles/new", {categories: categories})
     })
@@ -35,7 +36,7 @@ router.get("/admin/articles/new", (req,res) => {
 })
 */
 
-router.post('/admin/articles/save', (req, res) => {
+router.post('/admin/articles/save', adminAuth, (req, res) => {
   const slug = slugify(req.body.title, { lower: true, strict: true });
   const { title, body, category } = req.body;
   Article.create({
@@ -45,7 +46,7 @@ router.post('/admin/articles/save', (req, res) => {
   })
 })
 
-router.post("/articles/delete", (req,res) => {
+router.post("/articles/delete", adminAuth, (req,res) => {
     let id = req.body.id
       if(id != undefined) { //Se não estiver vazio
         if(!isNaN(id)) { //Significa não é um número
@@ -65,7 +66,7 @@ router.post("/articles/delete", (req,res) => {
       }
   })
   
- router.get("/admin/articles/edit/:id", (req, res) => {
+ router.get("/admin/articles/edit/:id", adminAuth, (req, res) => {
     let id = req.params.id
     Article.findByPk(id).then(article => { //Para pesquisar pelo id
       if (article != undefined) {
@@ -80,11 +81,11 @@ router.post("/articles/delete", (req,res) => {
     })
   })
 
- router.post("/articles/update", (req, res) => {
+ router.post("/articles/update", adminAuth, (req, res) => {
   let id= req.body.id
   let title = req.body.title
   let body = req.body.body
-  let categoru = req.body.category
+  let category = req.body.category
 
   Article.update({title: title, body: body, categoryId: category, slug:slugify(title)}, {
     where: {
@@ -97,7 +98,7 @@ router.post("/articles/delete", (req,res) => {
   })
  })
 
- router.get("/articles/page/:num", (req, res) => {
+ router.get("/articles/page/:num",  (req, res) => {
   let page = req.params.num
 
   if (isNaN(page) || page == 1) {

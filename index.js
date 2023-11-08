@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const connection = require('./database/database')
+const session = require("express-session")
 
 //Serve para adicionar o router
 const categoriesController = require("./categories/categoriesController")
@@ -15,6 +16,14 @@ const User = require("./users/User")
 
 //Para dizer para o js usar o ejs como sua view engine
 app.set('view engine', 'ejs')
+
+// Session
+
+//Redis - BD para guardar sessions
+
+app.use(session({
+    secret: "77G834GTRDRG!@#$%", cookie: { maxAge: 30000000}
+}))
 
 //Para criar os arquivos estáticos
 app.use(express.static('public'))
@@ -50,6 +59,8 @@ connection.authenticate()
 app.use("/", categoriesController)
 app.use("/", articlesController)
 app.use("/", usersController)
+
+
 
 app.get('/:slug',(req,res)=>{
   let slug = req.params.slug;
