@@ -20,23 +20,8 @@ router.get("/admin/articles/new", adminAuth, (req,res) => {
    
 })
 
-/*router.post("/articles/save", (req, res) => {
-    let title = req.body.title
-    let body = req.body.body
-    let category = req.body.category
 
-   Article.create({
-    title: title,
-    slug: slugify(title),
-    body: body,
-    categoryId: category
-   }).then(() => {
-    res.redirect("/admin/articles")
-   })
-})
-*/
-
-router.post('/admin/articles/save', adminAuth, (req, res) => {
+router.post('/articles/save', adminAuth, (req, res) => {
   const slug = slugify(req.body.title, { lower: true, strict: true });
   const { title, body, category } = req.body;
   Article.create({
@@ -90,6 +75,7 @@ router.post("/articles/delete", adminAuth, (req,res) => {
   Article.update({title: title, body: body, categoryId: category, slug:slugify(title)}, {
     where: {
       id: id
+      //Esta parte especifica a condição para encontrar o registro que você deseja atualizar na tabela Article. Neste caso, o método update irá encontrar um artigo onde a coluna id é igual ao valor de id, que também é extraído do corpo da requisição (req.body). Isso garante que apenas o registro com o ID específico seja atualizado.
     }
   }).then(() => {
     res.redirect("/admin/articles")

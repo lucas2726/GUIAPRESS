@@ -18,9 +18,7 @@ const User = require("./users/User")
 app.set('view engine', 'ejs')
 
 // Session
-
 //Redis - BD para guardar sessions
-
 app.use(session({
     secret: "77G834GTRDRG!@#$%", cookie: { maxAge: 30000000}
 }))
@@ -46,7 +44,7 @@ connection.authenticate()
       order:[
         ['id','DESC']
       ],
-      limit: 4
+      limit: 4  //Para dizer o limite de artigos por pasta
     }).then(articles => {
        Category.findAll().then(categories => {
         res.render("index", {articles: articles, categories: categories})/* Aqui, o servidor está respondendo à requisição HTTP renderizando um template chamado "index" e passando dois objetos como dados para o frontend. O objeto articles contém os artigos recuperados da consulta à tabela Article, e o objeto categories contém as categorias recuperadas da consulta à tabela Category. Estes dados podem ser usados no frontend para exibir os artigos e categorias na página.*/
